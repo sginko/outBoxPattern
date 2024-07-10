@@ -1,0 +1,63 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor Client
+participant Service
+database Db
+participant Bik
+participant Big
+participant Bg
+
+Client -> Service: POST: mortgageRequest()
+activate Service
+Service -> Db : save mortgage request
+Db --> Service :saved
+Service --> Client : HTTP 202 requestReceived
+deactivate Service
+
+
+Service -> Db : getMortgageRequest
+
+activate Service
+Db --> Service:
+
+Service -> Db: getCustomer()
+
+Db --> Service:
+
+Service -> Big: getScoring()
+activate Big
+Big --> Service
+deactivate Big
+
+Service -> Bik: getAccountInfo()
+activate Bik
+Bik --> Service
+deactivate Bik
+
+Service -> Bg: isCustomerAllowed()
+activate Bg
+Bg --> Service
+deactivate Bg
+
+Service -> Db : saveMortgageResult()
+Db --> Service: saved()
+
+deactivate Service
+
+Client -> Service: GET: getMortgageRequestInfo()
+activate Service
+Service -> Db :
+Db --> Service :
+Service --> Client : HTTP 200 mortgageRequestResponse (OfferId)
+deactivate Service
+
+Client -> Service: GET: getMortgageOffer(OfferId)
+activate Service
+Service -> Db :
+Db --> Service :
+Service --> Client : HTTP 200 mortgageOfferDto
+deactivate Service
+
+
+@enduml

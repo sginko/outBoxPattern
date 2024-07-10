@@ -1,0 +1,35 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor Client
+participant Service
+database Db
+participant Bik
+participant Big
+participant Bg
+
+Client -> Service: POST: takeOutMortgage()
+activate Service
+Service -> Db: getCustomer()
+Db --> Service:
+
+Service -> Big: getScoring()
+activate Big
+Big --> Service
+deactivate Big
+
+Service -> Bik: getAccountInfo()
+activate Bik
+Bik --> Service
+deactivate Bik
+
+Service -> Bg: isCustomerAllowed()
+activate Bg
+Bg --> Service
+deactivate Bg
+
+Client <-- Service: takeOutMortgage() response
+deactivate Service
+
+
+@enduml

@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: outBoxPattern
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:mydb
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+
+org:
+  jobrunr:
+    background-job-server:
+      enabled: true
+      poll-interval-in-seconds: 5
+    dashboard:
+      enabled: true
+      port: 8000
+    jobs:
+      default-number-of-retries: 1
